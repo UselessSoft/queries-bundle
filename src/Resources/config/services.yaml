@@ -1,0 +1,13 @@
+imports:
+    - { resource: handlers.yaml }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    UselessSoft\Queries\QueryBus:
+        arguments:
+            $masterHandler: '@UselessSoft\Queries\QueryHandlerChain'
+    UselessSoft\Queries\QueryHandlerChain:

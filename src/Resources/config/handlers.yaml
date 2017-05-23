@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        tags:
+            - { name: queries.handler }
+
+    UselessSoft\Queries\Query\CountQueryHandler:
+    UselessSoft\Queries\Query\SingleItemQueryHandler:
+
+    UselessSoft\Queries\Doctrine\Query\EntityQueryHandler:
+    UselessSoft\Queries\Doctrine\Query\PairsQueryHandler:
+    UselessSoft\Queries\Doctrine\Query\SelectQueryHandler:
+    UselessSoft\Queries\Doctrine\Query\SelectOneQueryHandler:

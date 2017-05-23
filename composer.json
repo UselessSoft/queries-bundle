@@ -1,0 +1,20 @@
+{
+    "name": "useless-soft/queries-bundle",
+    "description": "Queries for Symfony",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "require": {
+        "php": "^7.1",
+        "symfony/config": "^3.3@rc",
+        "symfony/dependency-injection": "^3.3@rc",
+        "symfony/http-foundation": "^3.3@rc",
+        "symfony/http-kernel": "^3.3@rc",
+        "useless-soft/queries": "dev-master",
+        "useless-soft/queries-doctrine": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "UselessSoft\\QueriesBundle\\": "src/"
+        }
+    }
+}
