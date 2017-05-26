@@ -7,7 +7,20 @@ services:
         autoconfigure: true
         public: true
 
-    UselessSoft\Queries\QueryBus:
+    queries.locator:
+        class: Symfony\Component\DependencyInjection\ServiceLocator
+        tags: ['container.service_locator']
+        public: false
+
+    UselessSoft\Queries\QueryBusInterface:
+        alias: UselessSoft\QueriesBundle\DeferredQueryBus
+
+    UselessSoft\Queries\QueryHandlerInterface:
+        alias: UselessSoft\QueriesBundle\DeferredQueryBus
+
+    UselessSoft\QueriesBundle\DeferredQueryBus:
         arguments:
-            $masterHandler: '@UselessSoft\Queries\QueryHandlerChain'
-    UselessSoft\Queries\QueryHandlerChain:
+            $locator: '@queries.locator'
+            $handlerNames: []
+
+    UselessSoft\Queries\Doctrine\Queryable:

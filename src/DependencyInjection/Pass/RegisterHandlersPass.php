@@ -7,7 +7,7 @@ namespace UselessSoft\QueriesBundle\DependencyInjection\Pass;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use UselessSoft\Queries\QueryHandlerChain;
+use UselessSoft\QueriesBundle\DeferredQueryBus;
 use UselessSoft\QueriesBundle\DependencyInjection\QueriesExtension;
 
 class RegisterHandlersPass implements CompilerPassInterface
@@ -16,10 +16,21 @@ class RegisterHandlersPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container) : void
     {
-        $chain = $container->getDefinition(QueryHandlerChain::class);
+        $locator = $container->getDefinition('queries.locator');
+        $bus = $container->getDefinition(DeferredQueryBus::class);
 
-        foreach ($container->findTaggedServiceIds(self::TAG_NAME) as $serviceId => $tags) {
-            $chain->addMethodCall('addHandler', [new Reference($serviceId)]);
-        }
+        $handlerNames = array_keys($container->findTaggedServiceIds(self::TAG_NAME));
+
+        $locator->setArgument(
+            0,
+            array_combine(
+                $handlerNames,
+                array_map(function (string $handlerName) : Reference {
+                    return new Reference($handlerName);
+                }, $handlerNames)
+            )
+        );
+
+        $bus->replaceArgument('$handlerNames', $handlerNames);
     }
 }
