@@ -35,7 +35,7 @@ class DeferredQueryBus implements QueryBusInterface
         return $this->resolveHandler($query) !== null;
     }
 
-    public function fetch(QueryInterface $query)
+    public function handle(QueryInterface $query)
     {
         $handler = $this->resolveHandler($query);
 
@@ -43,7 +43,7 @@ class DeferredQueryBus implements QueryBusInterface
             throw new InvalidArgumentException('Unsupported query.');
         }
 
-        return $handler->fetch($query);
+        return $handler->handle($query);
     }
 
     private function resolveHandler(QueryInterface $query) : ?QueryHandlerInterface
