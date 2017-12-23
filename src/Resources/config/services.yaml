@@ -14,13 +14,17 @@ services:
 
     UselessSoft\Queries\QueryBusInterface:
         alias: UselessSoft\QueriesBundle\DeferredQueryBus
-
     UselessSoft\Queries\QueryHandlerInterface:
         alias: UselessSoft\QueriesBundle\DeferredQueryBus
-
+    UselessSoft\Queries\Doctrine\QueryHandlerInterface:
+        alias: UselessSoft\QueriesBundle\DeferredQueryBus
     UselessSoft\QueriesBundle\DeferredQueryBus:
         arguments:
             $locator: '@queries.locator'
             $handlerNames: []
 
+    UselessSoft\Queries\QueryableInterface:
+        alias: UselessSoft\Queries\Doctrine\Queryable
+    UselessSoft\Queries\Doctrine\QueryableInterface:
+        alias: UselessSoft\Queries\Doctrine\Queryable
     UselessSoft\Queries\Doctrine\Queryable:
