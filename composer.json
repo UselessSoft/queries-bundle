@@ -5,12 +5,12 @@
     "type": "symfony-bundle",
     "require": {
         "php": "^7.1",
-        "symfony/config": "^3.3",
-        "symfony/dependency-injection": "^3.3",
-        "symfony/http-foundation": "^3.3",
-        "symfony/http-kernel": "^3.3",
+        "symfony/config": "^3.3|^4.0",
+        "symfony/dependency-injection": "^3.3|^4.0",
+        "symfony/http-foundation": "^3.3|^4.0",
+        "symfony/http-kernel": "^3.3|^4.0",
         "useless-soft/queries": "^0.1",
-        "useless-soft/queries-doctrine": "^0.2"
+        "useless-soft/queries-doctrine": "^0.2.1"
     },
     "autoload": {
         "psr-4": {
