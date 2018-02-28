@@ -40,7 +40,7 @@ class DeferredQueryBus implements QueryBusInterface
         $handler = $this->resolveHandler($query);
 
         if ($handler === null) {
-            throw new InvalidArgumentException('Unsupported query.');
+            throw new InvalidArgumentException(sprintf('Unsupported query of type %s, did you forget to register a handler?', get_class($query)));
         }
 
         return $handler->handle($query);
