@@ -18,19 +18,36 @@ class RegisterHandlersPass implements CompilerPassInterface
     {
         $locator = $container->getDefinition('queries.locator');
         $bus = $container->getDefinition(DeferredQueryBus::class);
+        $handlerNames = $this->getHandlerNames($container);
 
-        $handlerNames = array_keys($container->findTaggedServiceIds(self::TAG_NAME));
-
-        $locator->setArgument(
-            0,
-            array_combine(
-                $handlerNames,
-                array_map(function (string $handlerName) : Reference {
-                    return new Reference($handlerName);
-                }, $handlerNames)
-            )
-        );
-
+        $locator->setArgument(0, $this->getHandlerReferences($this->getHandlerReferences($handlerNames)));
         $bus->replaceArgument('$handlerNames', $handlerNames);
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getHandlerNames(ContainerBuilder $container) : array
+    {
+        return array_filter(
+            array_keys($container->findTaggedServiceIds(self::TAG_NAME)),
+            function (string $name) : bool {
+                return $name !== DeferredQueryBus::class;
+            }
+        );
+    }
+
+    /**
+     * @param string[] $handlerNames
+     * @return Reference[]
+     */
+    private function getHandlerReferences(array $handlerNames) : array
+    {
+        return array_combine(
+            $handlerNames,
+            array_map(function (string $handlerName) : Reference {
+                return new Reference($handlerName);
+            }, $handlerNames)
+        );
     }
 }
